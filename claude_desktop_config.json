@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "my-mcp-test-server": {
+      "command": "node",
+      "args": ["/Users/sakib/Downloads/mcp-test-server/dist/server.js"]
+    }
+  }
+}
