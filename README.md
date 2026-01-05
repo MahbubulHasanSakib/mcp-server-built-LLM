@@ -23,7 +23,7 @@ A **Model Context Protocol (MCP) server** written in TypeScript that inserts use
 
 ---
 
-## ⚡ Quick Start (5 Commands)
+## ⚡ Quick Start
 
 Install dependencies, build, and run:
 
