@@ -40,9 +40,6 @@ const server = new McpServer({
 /* -----------------------------
    Tool: insert_user
 ------------------------------ */
-/* -----------------------------
-   Tool: insert_user
------------------------------- */
 server.registerTool(
   "insert_user",
   {
@@ -92,4 +89,4 @@ server.registerTool(
 const transport = new StdioServerTransport();
 await server.connect(transport);
 
-console.error("🚀 MCP Mongo Users Server running (v1.25.1 + Zod)");
+console.log("🚀 MCP Server running 🚀");
