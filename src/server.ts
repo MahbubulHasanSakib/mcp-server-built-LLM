@@ -89,4 +89,4 @@ server.registerTool(
 const transport = new StdioServerTransport();
 await server.connect(transport);
 
-console.log("🚀 MCP Server running 🚀");
+//console.log("🚀 MCP Server running 🚀");
