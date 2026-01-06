@@ -1,6 +1,6 @@
 # MCP Mongo Users Server (TypeScript + Zod)
 
-A **Model Context Protocol (MCP) server** written in TypeScript that inserts users into a **MongoDB database** with **type-safe validation using Zod**. Fully compatible with **MCP Inspector** for testing.
+A **Model Context Protocol (MCP) server** written in TypeScript that inserts users into a **MongoDB database** and can search data dynamically (conditional query) from any database collection with **type-safe validation using Zod**. Fully compatible with **MCP Inspector** for testing.
 
 ---
 
@@ -8,7 +8,8 @@ A **Model Context Protocol (MCP) server** written in TypeScript that inserts use
 
 - MCP server using **SDK v1.25.1**
 - Strict input validation with **Zod**
-- Inserts users into **MongoDB `users` collection**
+- **Inserts** users into **MongoDB `users` collection**
+- **Search** data dynamically from **any MongoDB collection**
 - STDIO transport ready for **MCP Inspector**
 - TypeScript ready for **Node.js 18+**
 - Easily extendable for update/delete tools or HTTP transport
