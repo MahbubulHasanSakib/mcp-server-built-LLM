@@ -83,6 +83,89 @@ server.registerTool(
 );
 
 
+const SearchSchema = z.object({
+  collection: z.string().min(1, "Collection name is required"),
+
+  query: z.record(z.string(), z.any()).optional().default({}),
+
+  projection: z.record(z.string(), z.any()).optional(),
+
+  limit: z.number().int().positive().max(100).optional().default(20),
+
+  sort: z.record(z.string(), z.union([z.literal(1), z.literal(-1)])).optional(),
+});
+
+/* -----------------------------
+   Tool: search_data
+------------------------------ */
+
+server.registerTool(
+  "search_data",
+  {
+    description: "Search data from any MongoDB collection dynamically",
+    inputSchema: SearchSchema,
+  },
+  async (args: any) => {
+    // MCP sometimes sends payload under args.input
+    const input = args?.input ?? args;
+
+    // Validate input
+    const parsed = SearchSchema.safeParse(input);
+    if (!parsed.success) {
+      return {
+        isError: true,
+        content: [
+          {
+            type: "text",
+            text: parsed.error.issues
+              .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+              .join(" | "),
+          },
+        ],
+      };
+    }
+
+    const { collection, query, projection, limit, sort } = parsed.data;
+
+    try {
+      const col = db.collection(collection);
+
+      let cursor = col.find(query ?? {}, {
+        projection: projection ?? undefined,
+      });
+
+      if (sort) {
+        cursor = cursor.sort(sort);
+      }
+      if (limit) {
+        cursor = cursor.limit(limit);
+      }
+
+      const results = await cursor.toArray();
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(results, null, 2),
+          },
+        ],
+      };
+    } catch (error: any) {
+      return {
+        isError: true,
+        content: [
+          {
+            type: "text",
+            text: `❌ Error searching data: ${error.message}`,
+          },
+        ],
+      };
+    }
+  }
+);
+
+
 /* -----------------------------
    STDIO Transport
 ------------------------------ */
